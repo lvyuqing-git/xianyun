@@ -6,7 +6,7 @@
       <el-carousel-item v-for="(item, index) in banners"
                         :key="index">
         <div class="banner"
-             :style="`background:url(${item}) center center no-repeat;`"></div>
+             :style="`background:url(${$axios.defaults.baseURL+item.url}) center center no-repeat;`"></div>
       </el-carousel-item>
     </el-carousel>
 
@@ -38,10 +38,7 @@ export default {
   data() {
     return {
       // 轮播图的图片
-      banners: [
-        'http://157.122.54.189:9095/assets/images/th01.jfif',
-        'http://157.122.54.189:9095/assets/images/th02.jfif'
-      ],
+      banners: [],
 
       // 搜索栏的数据
       options: [
@@ -62,7 +59,6 @@ export default {
       current: 0
     }
   },
-
   methods: {
     // 搜索栏按钮的点击事件
     handleClick(index) {
@@ -72,6 +68,15 @@ export default {
       }
       this.current = index
     }
+  },
+  mounted () {
+      this.$axios({
+          url : '/scenics/banners'
+      }).then((res)=>{
+          this.banners = res.data.data
+      }).catch((error)=>{
+          console.log(error);
+      })
   }
 }
 </script>
