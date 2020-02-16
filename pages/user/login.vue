@@ -24,7 +24,7 @@
         <LoginForm v-if="currentTab == 0"></LoginForm>
 
         <!-- 注册功能组件 -->
-        <!-- <RegisterForm v-if="currentTab == 1"/> -->
+        <RegisterForm v-if="currentTab == 1"></RegisterForm>
       </div>
     </el-row>
   </div>
@@ -32,10 +32,11 @@
 
 <script>
 import LoginForm from '../../components/user/loginFrom'
+import RegisterForm from '../../components/user/registerForm'
 export default {
   data() {
     return {
-      currentTab: 0
+      currentTab: 1
     }
   },
   methods: {
@@ -44,7 +45,8 @@ export default {
     }
   },
   components: {
-    LoginForm
+    LoginForm,
+    RegisterForm,
   }
 }
 </script>
