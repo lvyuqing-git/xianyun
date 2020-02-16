@@ -32,7 +32,8 @@
         <el-input v-model="registerForm.configPassword"></el-input>
       </el-form-item>
       <el-button type="primary"
-                 class="btnRegister" @click="userRegister">注册</el-button>
+                 class="btnRegister"
+                 @click="userRegister">注册</el-button>
     </el-form>
   </div>
 </template>
@@ -79,7 +80,7 @@ export default {
     }
   },
   methods: {
-      //发送验证码
+    //发送验证码
     clickCaptcha() {
       if (!this.registerForm.username) {
         this.$message({
@@ -88,61 +89,62 @@ export default {
         })
         return
       }
-      this.$store
-        .dispatch('user/register', { tel: this.registerForm.username })
+      this.$store.dispatch('user/register', { tel: this.registerForm.username })
     },
     //注册用户
-    userRegister(){
-        let rules = {
-            username : {
-                errMessage : '手机号不能为空',
-                verification : ()=>{
-                    return !!this.registerForm.username
-                }
-            },
-             nickname : {
-                errMessage : '昵称',
-                verification : ()=>{
-                    return !!this.registerForm.nickname
-                }
-            },
-             captcha : {
-                errMessage : '验证码不能为空',
-                verification : ()=>{
-                    return !!this.registerForm.captcha
-                }
-            },
-             password : {
-                errMessage : '密码不能为空',
-                verification : ()=>{
-                    return !!this.registerForm.password
-                }
-            },
-             checkPass : {
-                errMessage : '确认密码不能为空',
-                verification : ()=>{
-                    return !!this.registerForm.checkPass
-                }
-            },
+    userRegister() {
+      let rules = {
+        username: {
+          errMessage: '手机号不能为空',
+          verification: () => {
+            return !!this.registerForm.username
+          }
+        },
+        nickname: {
+          errMessage: '昵称',
+          verification: () => {
+            return !!this.registerForm.nickname
+          }
+        },
+        captcha: {
+          errMessage: '验证码不能为空',
+          verification: () => {
+            return !!this.registerForm.captcha
+          }
+        },
+        password: {
+          errMessage: '密码不能为空',
+          verification: () => {
+            return !!this.registerForm.password
+          }
+        },
+        checkPass: {
+          errMessage: '确认密码不能为空',
+          verification: () => {
+            return !!this.registerForm.checkPass
+          }
         }
-        let arr = Object.keys(rules)
-        let valid = true
-        arr.forEach((item)=>{
-            if(!valid) return
-            valid = item.verification
+      }
+      let arr = Object.keys(rules)
+      let valid = true
+      arr.forEach(item => {
+        if (!valid) return
+        valid = item.verification
+      })
+      if (valid) return
+      const { configPassword, ...post } = this.registerForm
+      this.$axios({
+        url: '/accounts/register',
+        method: 'POST',
+        data: post
+      }).then(res => {
+        this.$store.commit('user/setUserInfo', res.data)
+        this.$message({
+          showClose: true,
+          message: '注册成功',
+          type: 'success'
         })
-         if(valid) return
-       const {configPassword,...post} = this.registerForm
-        this.$axios({
-            url : '/accounts/register',
-            method :'POST',
-            data : post
-        }).then((res)=>{
-            console.log(res);
-           
-        })
-    
-
+      })
     }
   }
 }
