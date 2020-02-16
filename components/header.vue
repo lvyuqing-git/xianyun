@@ -27,7 +27,8 @@
             <img :src="$axios.defaults.baseURL+$store.state.user.userInfo.user.defaultAvatar" alt="" class="userPhoto">
           </span>
           <el-dropdown-menu slot="dropdown">
-            {{$store.state.user.userInfo.user.nickname}}
+                <el-dropdown-item>个人主页</el-dropdown-item>
+                <el-dropdown-item @click="uotLogin">退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <nuxt-link to="/user/login" v-if="!$store.state.user.userInfo.token">登录/注册</nuxt-link>
@@ -37,7 +38,13 @@
 </template>
 
 <script>
-export default {}
+export default {
+    methods: {
+        uotLogin(){
+            localStorage.removeItem()
+        }
+    }
+}
 </script>
 
 <style scoped lang="less">
