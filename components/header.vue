@@ -28,7 +28,7 @@
           </span>
           <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>个人主页</el-dropdown-item>
-                <el-dropdown-item @click="uotLogin">退出</el-dropdown-item>
+                <el-dropdown-item ><span @click="uotLogin">退出</span> </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <nuxt-link to="/user/login" v-if="!$store.state.user.userInfo.token">登录/注册</nuxt-link>
@@ -41,7 +41,10 @@
 export default {
     methods: {
         uotLogin(){
-            localStorage.removeItem()
+            this.$store.commit('user/setUserInfo',{
+                token : '',
+                user : {}
+            })
         }
     }
 }

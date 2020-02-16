@@ -1,5 +1,7 @@
-export const state =  {
-    userInfo : {}
+export const state =  ()=>{
+    return {
+        userInfo : {}
+    }
 }
 
 export const mutations = {
